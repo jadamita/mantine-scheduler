@@ -1,7 +1,17 @@
 {
   "name": "mantine-scheduler",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "author": {
+    "name": "Joseph Adamita",
+    "email": "joeadamita@live.com"
+  },
+  "description": "",
+  "license": "MIT",
+  "keywords": [
+    "mantine",
+    "scheduler"
+  ],
   "type": "module",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
@@ -13,7 +23,8 @@
     "build": "tsc --p ./tsconfig-build.json && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "publish": "npm publish"
   },
   "peerDependencies": {
     "@mantine/core": "^7.11.2",
@@ -22,6 +33,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.7",
     "@types/node": "^22.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
