@@ -10,7 +10,8 @@
   "license": "MIT",
   "keywords": [
     "mantine",
-    "scheduler"
+    "scheduler",
+    "ui"
   ],
   "type": "module",
   "main": "dist/main.js",
