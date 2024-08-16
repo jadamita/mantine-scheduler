@@ -209,7 +209,7 @@ export const Scheduler: React.FC<SchedulerProps> = ({
                       </Table.Td>
                     );
                   } else if (index > startSlotIndex) {
-                    return null; // Skip rendering cells that are covered by an event
+                    return null;
                   }
                 }
 

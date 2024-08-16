@@ -1,9 +1,7 @@
-import "./App.css";
-
 import { Scheduler, User, Event } from "../lib/Scheduler";
 import dayjs from "dayjs";
 import { generateTimeSlots } from "../lib/utils";
-import { Avatar, Group, Text } from "@mantine/core";
+import { Avatar, Container, Group, Paper, Text } from "@mantine/core";
 
 function App() {
   const users: User[] = [
@@ -97,30 +95,33 @@ function App() {
 
   return (
     <>
-      <Scheduler
-        date={dayjs()}
-        timeSlots={timeSlots}
-        events={events}
-        users={users}
-        onEventClick={handleEventClick}
-        onCellClick={handleCellClick}
-        userRenderer={(user) => (
-          <>
-            <Group>
-              <Avatar src={user.avatar as string} radius="xl" />
-              <Text size="sm" fw={500}>
-                {user.name}
-              </Text>
-            </Group>
-          </>
-        )}
-        tableProps={{
-          striped: true,
-          highlightOnHover: true,
-          withTableBorder: true,
-          withColumnBorders: true,
-        }}
-      />
+      <Container mt={35}>
+        <Paper withBorder radius="md" shadow="sm" p={15}>
+          <Scheduler
+            date={dayjs()}
+            timeSlots={timeSlots}
+            events={events}
+            users={users}
+            onEventClick={handleEventClick}
+            onCellClick={handleCellClick}
+            userRenderer={(user) => (
+              <>
+                <Group>
+                  <Avatar src={user.avatar as string} radius="xl" />
+                  <Text size="sm" fw={500}>
+                    {user.name}
+                  </Text>
+                </Group>
+              </>
+            )}
+            tableProps={{
+              striped: true,
+              highlightOnHover: true,
+              withColumnBorders: true,
+            }}
+          />
+        </Paper>
+      </Container>
     </>
   );
 }
