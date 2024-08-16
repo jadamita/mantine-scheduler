@@ -6,7 +6,7 @@
 
 Mantine-Scheduler is a powerful and flexible React package that allows you to easily integrate scheduling functionality into your Mantine-based applications. This package provides a customizable calendar component with various views and event handling capabilities.
 
-![Mantine-Scheduler Demo](./screenshot.png)
+![Mantine-Scheduler Demo](https://raw.githubusercontent.com/jadamita/mantine-scheduler/main/screenshot.png?raw=true)
 
 ## Table of Contents
 
