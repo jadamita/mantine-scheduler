@@ -1,12 +1,235 @@
-# Mantine Scheduler
+# Mantine-Scheduler
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-A basic mantine scheduler component
+## Introduction
 
-## Screenshots
+Mantine-Scheduler is a powerful and flexible React package that allows you to easily integrate scheduling functionality into your Mantine-based applications. This package provides a customizable calendar component with various views and event handling capabilities.
 
-![screenshot](./screenshot.png)
+![Mantine-Scheduler Demo](./screenshot.png)
+
+## Table of Contents
+
+1. [Installation](#installation)
+2. [Basic Usage](#basic-usage)
+3. [Props](#props)
+4. [Event Handling](#event-handling)
+5. [Advanced Features](#advanced-features)
+6. [Examples](#examples)
+7. [Contributing](#contributing)
+8. [License](#license)
+
+## Installation
+
+To install the mantine-scheduler package, run the following command:
+
+```bash
+npm install mantine-scheduler
+```
+
+```bash
+yarn add mantine-scheduler
+```
+
+```bash
+pnpm install mantine-scheduler
+```
+
+## Basic Usage
+
+Here's a simple example of how to use the Mantine-Scheduler component in your React application:
+
+_This example creates a basic scheduler component with a single user and event._
+
+```tsx
+// Define a list of users of whom have events
+const users: User[] = [
+  { id: 1, name: "John Doe", avatar: "https://i.pravatar.cc/150?img=1" },
+];
+
+// Define a list of events for the given users
+const events: Event[] = [
+  {
+    id: 1,
+    userId: 1,
+    startTime: "9:00 AM",
+    endTime: "10:00 AM",
+    title: "Meeting",
+    color: "blue",
+  },
+  {
+    id: 2,
+    userId: 1,
+    startTime: "2:00 PM",
+    endTime: "4:00 PM",
+    title: "Project Work",
+    color: "green",
+  },
+];
+
+// Generate time slots for the scheduler
+// NOTE: generateTimeSlots is a helper method we provide
+const timeSlots = generateTimeSlots({
+  start: "9:00 AM",
+  end: "5:30 PM",
+  interval: 30,
+});
+
+<Scheduler
+  date={dayjs()}
+  timeSlots={timeSlots}
+  events={events}
+  users={users}
+/>;
+```
+
+## Props
+
+The MantineScheduler component accepts the following props:
+
+| Prop Name        | Required | Description                                                         | Default Value |
+| ---------------- | -------- | ------------------------------------------------------------------- | ------------- |
+| date             | Yes      | The date for which the schedule is displayed (Date or Dayjs object) | -             |
+| events           | Yes      | An array of Event objects                                           | -             |
+| users            | Yes      | An array of User objects                                            | -             |
+| timeSlots        | No       | An array of strings representing time slots                         | -             |
+| timeFormat       | No       | The format string for displaying time                               | "h:mm A"      |
+| onEventClick     | No       | Callback function triggered when an event is clicked                | -             |
+| onCellClick      | No       | Callback function triggered when a cell is clicked                  | -             |
+| cellRenderer     | No       | Custom renderer for individual cells                                | -             |
+| userRenderer     | No       | Custom renderer for user information                                | -             |
+| timeSlotRenderer | No       | Custom renderer for time slot labels                                | -             |
+| tableProps       | No       | Additional props for the Table component (excluding 'children')     | -             |
+| timeHeaderProps  | No       | Props for the time header cells                                     | -             |
+| userColumnProps  | No       | Props for the user column cells                                     | -             |
+
+_Note: This component also accepts all props from `TableProps` except for `children`._
+
+## Event Handling
+
+You can handle events using the provided callback props. Here's an example of how to handle event clicks:
+
+```tsx
+const App = () => {
+  const handleEventClick = (event: Event) => {
+    console.log("Event clicked:", event);
+  };
+
+  return <Scheduler events={events} onEventClick={handleEventClick} />;
+};
+```
+
+## Advanced Features
+
+#### Custom User Cell Rendering
+
+You can provide a custom user renderer to control how user cells are displayed:
+
+```tsx
+userRenderer={(user) => (
+    <Group>
+        <Avatar src={user.avatar as string} radius="xl" />
+        <Text size="sm" fw={500}>
+        {user.name}
+        </Text>
+    </Group>
+)}
+```
+
+## Examples
+
+Advanced usage with custom user renderer and styles:
+
+```tsx
+import { Scheduler, User, Event } from "../lib/Scheduler";
+import dayjs from "dayjs";
+import { generateTimeSlots } from "../lib/utils";
+import { Avatar, Container, Group, Paper, Text } from "@mantine/core";
+
+function App() {
+  const users: User[] = [
+    { id: 1, name: "John Doe", avatar: "https://i.pravatar.cc/150?img=1" },
+  ];
+
+  const events: Event[] = [
+    {
+      id: 1,
+      userId: 1,
+      startTime: "9:00 AM",
+      endTime: "10:00 AM",
+      title: "Meeting",
+      color: "blue",
+    },
+    {
+      id: 2,
+      userId: 1,
+      startTime: "2:00 PM",
+      endTime: "4:00 PM",
+      title: "Project Work",
+      color: "green",
+    },
+  ];
+
+  const handleEventClick = (event: Event) => {
+    alert(`Event clicked: ${event.id}`);
+  };
+
+  const handleCellClick = (user: User, time: string) => {
+    console.log("Cell clicked:", user, time);
+  };
+
+  const timeSlots = generateTimeSlots({
+    start: "9:00 AM",
+    end: "5:30 PM",
+    interval: 30,
+  });
+
+  const CustomEventRenderer = ({ event }: any) => (
+    <div style={{ backgroundColor: event.color, padding: "4px" }}>
+      <strong>{event.title}</strong>
+      <p>{event.description}</p>
+    </div>
+  );
+
+  return (
+    <>
+      <Container mt={35}>
+        <Paper withBorder radius="md" shadow="sm" p={15}>
+          <Scheduler
+            date={dayjs()}
+            timeSlots={timeSlots}
+            events={events}
+            users={users}
+            onEventClick={handleEventClick}
+            onCellClick={handleCellClick}
+            userRenderer={(user) => (
+              <>
+                <Group>
+                  <Avatar src={user.avatar as string} radius="xl" />
+                  <Text size="sm" fw={500}>
+                    {user.name}
+                  </Text>
+                </Group>
+              </>
+            )}
+            tableProps={{
+              striped: true,
+              highlightOnHover: true,
+              withColumnBorders: true,
+            }}
+          />
+        </Paper>
+      </Container>
+    </>
+  );
+}
+
+export default App;
+```
+
+## Contributing
+
+We welcome contributions to the Mantine-Scheduler package! Please feel free to create any issues or prs you feel would improve the package
 
 ## License
 
