@@ -41,13 +41,6 @@ function App() {
     interval: 30,
   });
 
-  const CustomEventRenderer = ({ event }: any) => (
-    <div style={{ backgroundColor: event.color, padding: "4px" }}>
-      <strong>{event.title}</strong>
-      <p>{event.description}</p>
-    </div>
-  );
-
   return (
     <>
       <Container mt={35}>
